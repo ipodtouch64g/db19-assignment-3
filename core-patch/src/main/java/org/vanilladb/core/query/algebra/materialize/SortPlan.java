@@ -270,4 +270,13 @@ public class SortPlan implements Plan {
 			dest.setVal(fldname, src.getVal(fldname));
 		return src.next();
 	}
+	@Override
+	public String explain(int tab, String plan) {
+		for (int i = 0; i < tab;i++) {
+			plan += "    ";
+		}
+		plan += "->SortPlan (#blks = " + blocksAccessed() + ", #rec = " + recordsOutput() + ")\n";
+		plan = this.p.explain(tab + 1, plan);
+		return plan;
+	}
 }

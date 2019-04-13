@@ -331,4 +331,14 @@ public class GroupByPlan extends ReduceRecordsPlan {
 	public long recordsOutput() {
 		return (long) hist.recordsOutput();
 	}
+	
+	@Override
+	public String explain(int tab, String plan) {
+		for (int i = 0; i < tab;i++) {
+			plan += "    ";
+		}
+		plan += "->GroupByPlan (#blks = " + blocksAccessed() + ", #rec = " + recordsOutput() + ")\n";
+		plan = this.sp.explain(tab+1, plan);
+		return plan;
+	}
 }

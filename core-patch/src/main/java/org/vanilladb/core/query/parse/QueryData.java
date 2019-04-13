@@ -27,6 +27,7 @@ import org.vanilladb.core.sql.predicate.Predicate;
 /**
  * Data for the SQL <em>select</em> and <em>explain</em> statements.
  */
+// save an additional isExplain information to determine if now we just need to EXPLAIN.
 public class QueryData {
 	private Set<String> projFields;
 	private Set<String> tables;
@@ -35,10 +36,13 @@ public class QueryData {
 	private Set<AggregationFn> aggFn;
 	private List<String> sortFields;
 	private List<Integer> sortDirs;
+	public boolean isExplain;
 
 	/**
 	 * Saves the information of a SQL query.
 	 * 
+	 * @param isExplain
+	 *            a boolean of whether to EXPLAIN
 	 * @param projFields
 	 *            a collection of field names
 	 * @param tables
@@ -54,8 +58,9 @@ public class QueryData {
 	 * @param sortDirs
 	 *            a list of sort directions
 	 */
-	public QueryData(Set<String> projFields, Set<String> tables, Predicate pred,
+	public QueryData(boolean isExplain,Set<String> projFields, Set<String> tables, Predicate pred,
 			Set<String> groupFields, Set<AggregationFn> aggFn, List<String> sortFields, List<Integer> sortDirs) {
+		this.isExplain = isExplain;
 		this.projFields = projFields;
 		this.tables = tables;
 		this.pred = pred;
@@ -132,6 +137,10 @@ public class QueryData {
 
 	public String toString() {
 		StringBuilder result = new StringBuilder();
+		
+		if(this.isExplain)
+			result.append("explain ");
+		
 		result.append("select ");
 		for (String fldname : projFields)
 			result.append(fldname + ", ");

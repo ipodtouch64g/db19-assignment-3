@@ -106,4 +106,13 @@ public class MaterializePlan implements Plan {
 	public long recordsOutput() {
 		return p.recordsOutput();
 	}
+	@Override
+	public String explain(int tab, String plan) {
+		for (int i = 0; i < tab;i++) {
+			plan += "    ";
+		}
+		plan += "->MaterializePlan (#blks = , #rec = \n)\n";
+		plan = this.p.explain(tab + 1, plan);
+		return plan;
+	}
 }

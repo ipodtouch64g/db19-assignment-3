@@ -96,4 +96,14 @@ public class TablePlan implements Plan {
 	public long recordsOutput() {
 		return (long) histogram().recordsOutput();
 	}
+	
+	@Override
+	public String explain(int tab, String plan) {
+		for (int i = 0; i < tab;i++) {
+			plan += "    ";
+		}
+		plan += "->TablePlan on ("+ ti.tableName() + ") (#blks = " + blocksAccessed() + ", #rec = " + recordsOutput() + ")\n";
+
+		return plan;
+	}
 }

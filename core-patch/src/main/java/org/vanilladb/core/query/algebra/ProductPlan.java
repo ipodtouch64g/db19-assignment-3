@@ -138,4 +138,17 @@ public class ProductPlan implements Plan {
 	public long recordsOutput() {
 		return (long) histogram().recordsOutput();
 	}
+	
+	@Override
+	public String explain(int tab, String plan) {
+		for (int i = 0; i < tab;i++) {
+			plan += "    ";
+		}
+		plan += "->ProductPlan (#blks = " + blocksAccessed() + ", #rec = " + recordsOutput() + ")\n";
+		plan = this.p1.explain(tab + 1, plan);
+		plan = this.p2.explain(tab + 1, plan);
+
+		return plan;
+	}
+
 }

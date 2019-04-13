@@ -61,4 +61,12 @@ public interface Plan {
 	 * @return the estimated number of output records
 	 */
 	long recordsOutput();
+	
+	/**
+	 * Returns the explain string.
+	 * 
+	 * @param tab: how many tabs.; plan: previous explain string to concatenate.
+	 * @return the explain string.
+	 */
+	String explain(int tab, String plan);
 }
