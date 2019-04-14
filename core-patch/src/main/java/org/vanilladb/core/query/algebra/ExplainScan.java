@@ -10,11 +10,13 @@ public class ExplainScan implements Scan {
 	private Scan s;
 	private Collection<String> fieldList;
 	private String planStr;
+	private int times;
 
 	public ExplainScan(Scan s, Collection<String> fieldList, String str) {
 		this.s = s;
 		this.fieldList = fieldList;
 		this.planStr = str;
+		this.times = 0;
 	}
 	@Override
 	public Constant getVal(String fldName) {
@@ -36,6 +38,9 @@ public class ExplainScan implements Scan {
 
 	@Override
 	public boolean next() {
+		this.times++;
+		if(this.times>1)
+			return false;
 		return s.next();
 	}
 
